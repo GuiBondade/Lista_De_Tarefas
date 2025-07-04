@@ -62,9 +62,15 @@ body {
     align-items: center;
   }
   
-  li.completed {
+  li.completed span {
     text-decoration: line-through;
     color: #999;
+  }
+  
+  li.completed button {
+    text-decoration: none;
+    color: white;
+    background-color: #ff4d4d;
   }
   
   li button {
@@ -76,4 +82,3 @@ body {
     justify-content: space-between;
     margin-top: 20px;
   }
-  

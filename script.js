@@ -1,3 +1,5 @@
+// Event Listener: executa a função loadTasks() automaticamente quando a página termina de carregar.
+// Isso garante que as tarefas salvas no localStorage sejam exibidas assim que o usuário acessar a página.
 document.addEventListener("DOMContentLoaded", loadTasks);
 
 function addTask() {
@@ -35,11 +37,19 @@ function renderTasks() {
     const li = document.createElement("li");
     li.className = task.completed ? "completed" : "";
 
-    li.innerHTML = `
-      <span onclick="toggleTask(${index})">${task.text}</span>
-      <button onclick="removeTask(${index})">Remover</button>
-    `;
+    // Cria o span da tarefa e adiciona event listener para alternar concluída/não concluída
+    const span = document.createElement("span");
+    span.textContent = task.text;
+    span.style.cursor = "pointer";
+    span.addEventListener("click", () => toggleTask(index));
 
+    // Cria o botão de remover e adiciona event listener para remover a tarefa
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remover";
+    removeBtn.addEventListener("click", () => removeTask(index));
+
+    li.appendChild(span);
+    li.appendChild(removeBtn);
     taskList.appendChild(li);
   });
 }
@@ -71,4 +81,18 @@ function clearAll() {
 
 function loadTasks() {
   renderTasks();
+
+  // Adiciona event listener ao botão "Adicionar"
+  document.querySelector('.input-section button').addEventListener("click", addTask);
+
+  // Adiciona event listener ao botão "Marcar Todas Concluídas"
+  document.querySelector('.controls button:nth-child(1)').addEventListener("click", markAllCompleted);
+
+  // Adiciona event listener ao botão "Remover Todas"
+  document.querySelector('.controls button:nth-child(2)').addEventListener("click", clearAll);
+
+  // Adiciona event listener para adicionar tarefa ao pressionar Enter no input
+  document.getElementById("taskInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") addTask();
+  });
 }
