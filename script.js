@@ -5,19 +5,22 @@ document.addEventListener("DOMContentLoaded", loadTasks);
 function addTask() {
   const input = document.getElementById("taskInput");
   const taskText = input.value.trim();
-
+  
+  
   if (taskText === "") return;
-
+  
+  
   const task = {
     text: taskText,
     completed: false
   };
-
+  
   const tasks = getTasks();
   tasks.push(task);
   saveTasks(tasks);
   input.value = "";
   renderTasks();
+  changeTaskAmount(1);
 }
 
 function getTasks() {
@@ -48,6 +51,9 @@ function renderTasks() {
     removeBtn.textContent = "Remover";
     removeBtn.addEventListener("click", () => removeTask(index));
 
+    // Atualiza o total de tarefas a partir do localStorage
+    document.getElementById("tasksTotal").textContent = localStorage.getItem("taskAmount") || 0;
+
     li.appendChild(span);
     li.appendChild(removeBtn);
     taskList.appendChild(li);
@@ -65,6 +71,7 @@ function removeTask(index) {
   const tasks = getTasks();
   tasks.splice(index, 1);
   saveTasks(tasks);
+  changeTaskAmount(-1);
   renderTasks();
 }
 
@@ -76,7 +83,16 @@ function markAllCompleted() {
 
 function clearAll() {
   localStorage.removeItem("tasks");
+  // reseseta o total de tarefas para 0, e remove o item do localStorage
+  document.getElementById("tasksTotal").textContent = 0;
+  localStorage.removeItem("taskAmount");
   renderTasks();
+}
+
+function changeTaskAmount(amount) {
+  totalAmount = parseInt(document.getElementById("tasksTotal").textContent) + amount;
+  localStorage.setItem("taskAmount", totalAmount)
+  document.getElementById("tasksTotal").textContent = localStorage.getItem("taskAmount") || 0;
 }
 
 function loadTasks() {
