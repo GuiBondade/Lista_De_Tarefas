@@ -5,22 +5,19 @@ document.addEventListener("DOMContentLoaded", loadTasks);
 function addTask() {
   const input = document.getElementById("taskInput");
   const taskText = input.value.trim();
-  
-  
+
   if (taskText === "") return;
-  
-  
+
   const task = {
     text: taskText,
     completed: false
   };
-  
+
   const tasks = getTasks();
   tasks.push(task);
   saveTasks(tasks);
   input.value = "";
   renderTasks();
-  changeTaskAmount(1);
 }
 
 function getTasks() {
@@ -51,9 +48,6 @@ function renderTasks() {
     removeBtn.textContent = "Remover";
     removeBtn.addEventListener("click", () => removeTask(index));
 
-    // Atualiza o total de tarefas a partir do localStorage
-    document.getElementById("tasksTotal").textContent = localStorage.getItem("taskAmount") || 0;
-
     li.appendChild(span);
     li.appendChild(removeBtn);
     taskList.appendChild(li);
@@ -71,7 +65,6 @@ function removeTask(index) {
   const tasks = getTasks();
   tasks.splice(index, 1);
   saveTasks(tasks);
-  changeTaskAmount(-1);
   renderTasks();
 }
 
@@ -83,16 +76,21 @@ function markAllCompleted() {
 
 function clearAll() {
   localStorage.removeItem("tasks");
-  // reseseta o total de tarefas para 0, e remove o item do localStorage
-  document.getElementById("tasksTotal").textContent = 0;
-  localStorage.removeItem("taskAmount");
   renderTasks();
 }
 
-function changeTaskAmount(amount) {
-  totalAmount = parseInt(document.getElementById("tasksTotal").textContent) + amount;
-  localStorage.setItem("taskAmount", totalAmount)
-  document.getElementById("tasksTotal").textContent = localStorage.getItem("taskAmount") || 0;
+function changeExibitionMode() {
+  const body = document.body;
+  const modeBtn = document.querySelector('.config_buttons button');
+  if (body.classList.contains("white_mode")) {
+    body.classList.remove("white_mode");
+    body.classList.add("black_mode");
+    modeBtn.textContent = "White Mode";
+  } else {
+    body.classList.remove("black_mode");
+    body.classList.add("white_mode");
+    modeBtn.textContent = "Black Mode";
+  }
 }
 
 function loadTasks() {
@@ -106,6 +104,9 @@ function loadTasks() {
 
   // Adiciona event listener ao botão "Remover Todas"
   document.querySelector('.controls button:nth-child(2)').addEventListener("click", clearAll);
+
+  // Adiciona event listener ao botão que troca o modo de exibição
+  document.querySelector('.config_buttons button').addEventListener("click", changeExibitionMode);
 
   // Adiciona event listener para adicionar tarefa ao pressionar Enter no input
   document.getElementById("taskInput").addEventListener("keydown", function(e) {

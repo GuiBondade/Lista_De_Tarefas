@@ -17,7 +17,7 @@ body {
   
   h1 {
     text-align: center;
-    color: #ff8800;
+    /*color: #ff8800;*/
   }
   
   .input-section {
@@ -81,4 +81,39 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+  }
+
+  .black_mode {
+    background: #262626;
+    background-color: #1a1a1a;
+  }
+
+  .white_mode {
+    background: #fff !important;
+    background-color: #fff !important;
+    color: #222 !important;
+  }
+
+  .white_mode .container {
+    background: #f3f3f3;
+    color: #222;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+  }
+
+  .white_mode input[type="text"] {
+    background: #fff;
+    color: #222;
+  }
+
+  .white_mode button {
+    color: #fff;
+  }
+
+  .white_mode li {
+    background: #eaeaea;
+    color: #222;
+  }
+
+  .white_mode li.completed span {
+    color: #bbb;
   }
