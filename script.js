@@ -84,9 +84,17 @@ function clearAll() {
   renderTasks();
 }
 
-function changeExibitionMode(cor) {
+function white_mode() {
+  changeExibitionMode("white_mode", '.config_buttons button:nth-child(1)');
+}
+
+function purple_mode() {
+  changeExibitionMode("purple_mode", '.config_buttons button:nth-child(2)');
+}
+
+function changeExibitionMode(cor, botao) {
   const body = document.body;
-  const modeBtn = '.config_buttons button:nth-child(1)';
+  const modeBtn = botao;
   if (body.classList.contains(cor)) {
     body.classList.remove(cor);
     body.classList.add("black_mode");
@@ -135,9 +143,9 @@ function loadTasks() {
   document.querySelector('.controls button:nth-child(2)').addEventListener("click", clearAll);
 
   // Adiciona event listener ao botão que troca o modo de exibição entre preto e branco
-  document.querySelector('.config_buttons button:nth-child(1)').addEventListener("click", changeExibitionMode("white_mode"));
+  document.querySelector('.config_buttons button:nth-child(1)').addEventListener("click", white_mode);
   // Adiciona event listener ao botão que troca o modo de exibição entre preto e roxo
-  document.querySelector('.config_buttons button:nth-child(2)').addEventListener("click", changeExibitionMode("purple_mode"));
+  document.querySelector('.config_buttons button:nth-child(2)').addEventListener("click", purple_mode);
 
   // Adiciona event listener para adicionar tarefa ao pressionar Enter no input
   document.getElementById("taskInput").addEventListener("keydown", function(e) {
