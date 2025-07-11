@@ -17,6 +17,7 @@ function addTask() {
   tasks.push(task);
   saveTasks(tasks);
   input.value = "";
+  changeTaskAmount(1);
   renderTasks();
 }
 
@@ -65,6 +66,7 @@ function removeTask(index) {
   const tasks = getTasks();
   tasks.splice(index, 1);
   saveTasks(tasks);
+  changeTaskAmount(-1);
   renderTasks();
 }
 
@@ -76,6 +78,9 @@ function markAllCompleted() {
 
 function clearAll() {
   localStorage.removeItem("tasks");
+  // reseseta o total de tarefas para 0, e remove o item do localStorage
+  document.getElementById("tasksTotal").textContent = 0;
+  localStorage.removeItem("taskAmount");
   renderTasks();
 }
 
@@ -91,6 +96,12 @@ function changeExibitionMode() {
     body.classList.add("white_mode");
     modeBtn.textContent = "Black Mode";
   }
+}
+
+function changeTaskAmount(amount) {
+  totalAmount = parseInt(document.getElementById("tasksTotal").textContent) + amount;
+  localStorage.setItem("taskAmount", totalAmount);
+  document.getElementById("tasksTotal").textContent = localStorage.getItem("taskAmount") || 0;
 }
 
 function loadTasks() {
