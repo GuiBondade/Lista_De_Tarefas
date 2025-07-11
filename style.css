@@ -117,3 +117,24 @@ body {
   .white_mode li.completed span {
     color: #bbb;
   }
+
+  .purple_mode {
+    background: #7f06c5 !important;
+    background-color: #bb20eb !important;
+    color: #222 !important;
+  }
+
+  .purple_mode .container {
+    background: #c169f5;
+    color: #faf2f2;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+  }
+
+  .purple_mode button {
+    color: #fff;
+  }
+
+  .purple_mode li {
+    background: #570570;
+    color: #ffffff;
+  }

@@ -84,18 +84,36 @@ function clearAll() {
   renderTasks();
 }
 
-function changeExibitionMode() {
+function changeExibitionMode(cor) {
   const body = document.body;
-  const modeBtn = document.querySelector('.config_buttons button');
-  if (body.classList.contains("white_mode")) {
-    body.classList.remove("white_mode");
+  const modeBtn = '.config_buttons button:nth-child(1)';
+  if (body.classList.contains(cor)) {
+    body.classList.remove(cor);
     body.classList.add("black_mode");
-    modeBtn.textContent = "White Mode";
+    modeBtn.textContent = cor;
   } else {
-    body.classList.remove("black_mode");
-    body.classList.add("white_mode");
-    modeBtn.textContent = "Black Mode";
-  }
+    body.classList.remove("black_mode")
+    body.classList.add(cor)
+  } 
+  
+
+  //if (body.classList.contains("white_mode")) {
+    //body.classList.remove("white_mode");
+    //body.classList.remove("purple_mode");
+    //body.classList.add("black_mode");
+    //modeBtn.textContent = "White Mode";
+  //elif (body.classList.contains("purple_mode")) {
+      //body.classList.remove("purple_mode");
+      //body.classList.remove("white_mode");
+      //body.classList.add("black_mode");
+      //modeBtn.textContent = "Purple Mode";
+    //}
+  //} else {
+    //body.classList.remove("black_mode");
+    //body.classList.remove("purple_mode");
+    //body.classList.add("white_mode");
+    //modeBtn.textContent = "Black Mode";
+  //}
 }
 
 function changeTaskAmount(amount) {
@@ -116,8 +134,10 @@ function loadTasks() {
   // Adiciona event listener ao botão "Remover Todas"
   document.querySelector('.controls button:nth-child(2)').addEventListener("click", clearAll);
 
-  // Adiciona event listener ao botão que troca o modo de exibição
-  document.querySelector('.config_buttons button').addEventListener("click", changeExibitionMode);
+  // Adiciona event listener ao botão que troca o modo de exibição entre preto e branco
+  document.querySelector('.config_buttons button:nth-child(1)').addEventListener("click", changeExibitionMode("white_mode"));
+  // Adiciona event listener ao botão que troca o modo de exibição entre preto e roxo
+  document.querySelector('.config_buttons button:nth-child(2)').addEventListener("click", changeExibitionMode("purple_mode"));
 
   // Adiciona event listener para adicionar tarefa ao pressionar Enter no input
   document.getElementById("taskInput").addEventListener("keydown", function(e) {
