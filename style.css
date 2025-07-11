@@ -121,12 +121,11 @@ body {
   .purple_mode {
     background: #7f06c5 !important;
     background-color: #bb20eb !important;
-    color: #222 !important;
+    color: #ffffff !important;
   }
 
   .purple_mode .container {
     background: #c169f5;
-    color: #faf2f2;
     box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
   }
 
@@ -137,4 +136,18 @@ body {
   .purple_mode li {
     background: #570570;
     color: #ffffff;
+  }
+
+  .config_buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .mode {
+    text-align: center;
+  }
+
+  .mode p {
+    margin: 0 0 10px 0;
   }

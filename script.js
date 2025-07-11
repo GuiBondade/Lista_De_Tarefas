@@ -33,6 +33,10 @@ function renderTasks() {
   const taskList = document.getElementById("taskList");
   taskList.innerHTML = "";
 
+  // Atualiza o total de tarefas e a cor do modo de exibição a partir do localStorage
+  document.getElementById("tasksTotal").textContent = localStorage.getItem("taskAmount") || 0;
+  changeExibitionMode(localStorage.getItem("corExibitionMode"));
+
   const tasks = getTasks();
   tasks.forEach((task, index) => {
     const li = document.createElement("li");
@@ -85,43 +89,35 @@ function clearAll() {
 }
 
 function white_mode() {
-  changeExibitionMode("white_mode", '.config_buttons button:nth-child(1)');
+  changeExibitionMode("white_mode");
 }
 
 function purple_mode() {
-  changeExibitionMode("purple_mode", '.config_buttons button:nth-child(2)');
+  changeExibitionMode("purple_mode");
 }
 
-function changeExibitionMode(cor, botao) {
+function changeExibitionMode(cor) {
   const body = document.body;
-  const modeBtn = botao;
+  // salva no localStorage a cor do modo de exibição como a cor do botao clickado
+  localStorage.setItem("corExibitionMode", cor);
+  // caso a botao clickado seja o da mesma cor do modo atual
   if (body.classList.contains(cor)) {
+    // remove a cor atual e deixa preto, salvando no localStorage, que é preto
     body.classList.remove(cor);
     body.classList.add("black_mode");
-    modeBtn.textContent = cor;
+    localStorage.setItem("corExibitionMode", "black_mode");
+    // caso a cor atual seja preto
+  } else if (body.classList.contains("black_mode")) {
+    // tira o preto e coloca a cor clickada
+    body.classList.remove("black_mode");
+    body.classList.add(cor);
+    // caso a cor do botão clickado não seja nem preta, nem a atual 
   } else {
-    body.classList.remove("black_mode")
-    body.classList.add(cor)
+    // descobre qual a cor atual (cor oposta), e aremove e adiciona a da clickada
+    let corOposta = ["white_mode", "purple_mode"].filter(color => color !== cor);
+    body.classList.remove(corOposta);
+    body.classList.add(cor);
   } 
-  
-
-  //if (body.classList.contains("white_mode")) {
-    //body.classList.remove("white_mode");
-    //body.classList.remove("purple_mode");
-    //body.classList.add("black_mode");
-    //modeBtn.textContent = "White Mode";
-  //elif (body.classList.contains("purple_mode")) {
-      //body.classList.remove("purple_mode");
-      //body.classList.remove("white_mode");
-      //body.classList.add("black_mode");
-      //modeBtn.textContent = "Purple Mode";
-    //}
-  //} else {
-    //body.classList.remove("black_mode");
-    //body.classList.remove("purple_mode");
-    //body.classList.add("white_mode");
-    //modeBtn.textContent = "Black Mode";
-  //}
 }
 
 function changeTaskAmount(amount) {
@@ -142,10 +138,11 @@ function loadTasks() {
   // Adiciona event listener ao botão "Remover Todas"
   document.querySelector('.controls button:nth-child(2)').addEventListener("click", clearAll);
 
-  // Adiciona event listener ao botão que troca o modo de exibição entre preto e branco
-  document.querySelector('.config_buttons button:nth-child(1)').addEventListener("click", white_mode);
-  // Adiciona event listener ao botão que troca o modo de exibição entre preto e roxo
-  document.querySelector('.config_buttons button:nth-child(2)').addEventListener("click", purple_mode);
+  // Adiciona event listener ao botão que troca o modo de exibição para branco
+  document.getElementById('whiteModeBtn').addEventListener("click", white_mode);
+
+  // Adiciona event listener ao botão que troca o modo de exibição para roxo
+  document.getElementById('purpleModeBtn').addEventListener("click", purple_mode);
 
   // Adiciona event listener para adicionar tarefa ao pressionar Enter no input
   document.getElementById("taskInput").addEventListener("keydown", function(e) {
